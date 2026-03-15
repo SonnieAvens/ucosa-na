@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ucosa-NA</title>
+  <title>UCOSA-North America</title>
   <style>
     * {
       margin: 0;
@@ -14,48 +14,276 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f4f6f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      color: #333;
     }
 
-    .container {
+    /* HEADER */
+    header {
+      background: #1a1a2e;
+      color: white;
       text-align: center;
-      padding: 60px 40px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-      max-width: 500px;
-      width: 90%;
+      padding: 40px 20px 30px;
     }
 
-    .logo {
-      width: 180px;
-      height: 180px;
+    header img {
+      width: 140px;
+      height: 140px;
       object-fit: contain;
-      margin-bottom: 32px;
       border-radius: 12px;
+      margin-bottom: 20px;
     }
 
-    h1 {
+    header h1 {
       font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #aab4c8;
+    }
+
+    /* NAV */
+    nav {
+      background: #16213e;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #cdd6f4;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      transition: background 0.2s;
+    }
+
+    nav a:hover {
+      background: #1a1a2e;
+      color: white;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 36px 40px;
+      margin-bottom: 28px;
+    }
+
+    section h2 {
+      font-size: 1.4rem;
       color: #1a1a2e;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8ecf4;
+    }
+
+    section h3 {
+      font-size: 1.05rem;
+      color: #16213e;
+      margin: 20px 0 8px;
+    }
+
+    section p {
+      line-height: 1.8;
+      color: #555;
       margin-bottom: 12px;
     }
 
-    p {
-      color: #666;
-      font-size: 1rem;
-      line-height: 1.6;
+    section ol,
+    section ul {
+      padding-left: 22px;
+      color: #555;
+    }
+
+    section li {
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+
+    .highlight-box {
+      background: #f0f4ff;
+      border-left: 4px solid #1a1a2e;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 12px;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      color: #333;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #aab4c8;
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 0.875rem;
+    }
+
+    footer a {
+      color: #cdd6f4;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 24px 20px;
+      }
+      header h1 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="/logo.jpg" alt="Ucosa-NA Logo" class="logo" />
-    <h1>Welcome to Ucosa-NA</h1>
-    <p>Connecting communities across North America.</p>
-  </div>
+
+  <!-- HEADER -->
+  <header>
+    <img src="/logo.jpg" alt="UCOSA-NA Logo" />
+    <h1>Welcome to UCOSA-North America</h1>
+    <p>Ugbeka College Old Students' Association &mdash; North America Chapter</p>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#about">About UCOSA</a>
+    <a href="#membership">Membership</a>
+    <a href="#objectives">Aims & Objectives</a>
+    <a href="#revenue">Revenue</a>
+    <a href="#meetings">Meetings</a>
+    <a href="#events">Recent Events</a>
+  </nav>
+
+  <main>
+
+    <!-- 1. ABOUT -->
+    <section id="about">
+      <h2>About UCOSA</h2>
+      <p>
+        Ugbeka College Old Students' Association is a not-for-profit organization whose members
+        are alumni/alumnus of Ugbeka College Evboehighae. It has world-wide affiliations, namely:
+        UCOSA-North America, UCOSA-Benin City, UCOSA-Europe, etc.
+      </p>
+      <p>
+        In particular, the UCOSA-North America members are from the U.S. and Canada only.
+      </p>
+    </section>
+
+    <!-- 2. MEMBERSHIP -->
+    <section id="membership">
+      <h2>Who Can Become A Member</h2>
+
+      <h3>a.) Membership</h3>
+      <p>
+        Membership is open to all former students of Ugbeka College Evboehighae residing in
+        North America, irrespective of the period of their candidature in the school. This means
+        that all former students of Ugbeka College residing in the U.S. or Canada are automatically
+        members. No membership registration fee of any sort is required.
+      </p>
+
+      <h3>b.) How Do I Get On Board?</h3>
+      <p>
+        If you attended Ugbeka College for any number of years, whether you graduated from the
+        school or not, you are potentially a member. Just reach out to any UCOSA-NA executive
+        officer — the President, P.R.O or Secretary. Your full names, phone number and email are
+        enough to bring you back to your old friends and brothers and sisters again.
+      </p>
+    </section>
+
+    <!-- 3. OBJECTIVES -->
+    <section id="objectives">
+      <h2>Aims And Objectives</h2>
+      <p>The purpose of the association includes, but is not limited to, the following:</p>
+      <ol type="a">
+        <li>To be a not-for-profit, non-political, charitable, and voluntary organization.</li>
+        <li>To help old students maintain the ties of friendship.</li>
+        <li>To identify and organize alumni of UCOSA in the Americas.</li>
+        <li>To promote the welfare of its members and provide support as necessary.</li>
+        <li>To help to strengthen teaching and learning at our alma mater.</li>
+        <li>To support and collaborate in any viable projects and programs as may be initiated by
+          the school's administration, benevolent organizations, Parent Teachers Association (PTA),
+          school board of governors and other chapters of UCOSA to salvage, sustain, uphold,
+          promote and protect the image of our alma mater.</li>
+        <li>To promote any other activities that may be deemed necessary and appropriate in the
+          interest of the association.</li>
+      </ol>
+    </section>
+
+    <!-- 4. REVENUE -->
+    <section id="revenue">
+      <h2>What Is The Association's Revenue Source</h2>
+      <p>Revenue sources of UCOSA comprise, but are not limited to, the following:</p>
+      <ol type="a">
+        <li>Members' annual dues of <strong>$100 US</strong> per member per year.</li>
+        <li>Incidental levies/voluntary contributions as may be deemed necessary by the executive
+          branch and the general membership assembly.</li>
+        <li>Donations by individuals and government/private entities.</li>
+      </ol>
+    </section>
+
+    <!-- 5. MEETINGS -->
+    <section id="meetings">
+      <h2>How Do Members Meet And Engage</h2>
+      <p>
+        Members conduct meetings via <strong>Zoom</strong> video conferencing app. Members easily
+        connect to meeting sessions using any internet connected device: Desktop, Laptop, iPad,
+        Tablets and Smartphones.
+      </p>
+      <p>
+        Information exchange between members and collaboration on the various committees'
+        assignments happen on the UCOSA-North America general <strong>WhatsApp</strong> platform
+        and the committee specific WhatsApp platforms. Information is also shared through the
+        general UCOSA email. All members receive messages sent to:
+      </p>
+      <div class="highlight-box">
+        <p><a href="mailto:ucosa.northamerica@gmail.com">ucosa.northamerica@gmail.com</a></p>
+      </div>
+
+      <h3>Meeting Day And Time</h3>
+      <p>
+        The General Assembly meetings are held <strong>once every two months</strong>, on the
+        <strong>last Sunday</strong> of the meeting month. Meeting time is
+        <strong>5:00 p.m. Eastern Standard Time</strong>.
+      </p>
+    </section>
+
+    <!-- 6. RECENT EVENTS -->
+    <section id="events">
+      <h2>Recent Events And Activities</h2>
+      <p>
+        In its short period of existence, UCOSA-North America has reached out to the Ugbeka
+        alma mater school officials to establish close reconnections with the school. The outreach
+        yielded the following positive storytelling photos.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 UCOSA-North America. All rights reserved.</p>
+    <p style="margin-top:6px;">
+      Contact: <a href="mailto:ucosa.northamerica@gmail.com">ucosa.northamerica@gmail.com</a>
+    </p>
+  </footer>
+
 </body>
 </html>
