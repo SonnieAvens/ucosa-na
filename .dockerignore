@@ -1,0 +1,10 @@
+node_modules
+.git
+.github
+*.md
+.env*
+coverage
+.DS_Store
+nginx
+scripts
+docker-compose*.yml
