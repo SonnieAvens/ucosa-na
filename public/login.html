@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Login — UCOSA-NA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      background: #1a1a2e;
+      color: white;
+      text-align: center;
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    header img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    header h1 { font-size: 1.3rem; }
+    header p  { font-size: 0.8rem; color: #aab4c8; }
+
+    /* BACK LINK */
+    .back-bar {
+      background: #16213e;
+      padding: 10px 24px;
+    }
+    .back-bar a {
+      color: #cdd6f4;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .back-bar a:hover { color: white; }
+
+    /* LOGIN CARD */
+    .login-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .login-card h2 {
+      font-size: 1.5rem;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .login-card .subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #dde3f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #333;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #1a1a2e;
+    }
+
+    .forgot {
+      display: block;
+      text-align: right;
+      font-size: 0.8rem;
+      color: #1a1a2e;
+      text-decoration: none;
+      margin-top: 6px;
+    }
+    .forgot:hover { text-decoration: underline; }
+
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: #1a1a2e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .btn-login:hover { background: #16213e; }
+
+    .divider {
+      text-align: center;
+      color: #bbb;
+      font-size: 0.85rem;
+      margin: 22px 0;
+      position: relative;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: #e8ecf4;
+    }
+    .divider::before { left: 0; }
+    .divider::after  { right: 0; }
+
+    .contact-note {
+      background: #f0f4ff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: #555;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .contact-note a {
+      color: #1a1a2e;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact-note a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #aab4c8;
+      text-align: center;
+      padding: 18px 20px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 480px) {
+      .login-card { padding: 32px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="/logo.jpg" alt="UCOSA-NA Logo" />
+    <div>
+      <h1>UCOSA-North America</h1>
+      <p>Member Portal</p>
+    </div>
+  </header>
+
+  <!-- BACK LINK -->
+  <div class="back-bar">
+    <a href="/">&larr; Back to Home</a>
+  </div>
+
+  <!-- LOGIN CARD -->
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h2>&#128274; Member Login</h2>
+      <p class="subtitle">Sign in to access the members area</p>
+
+      <form action="#" method="POST">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-login">Sign In</button>
+      </form>
+
+      <div class="divider">Not a member yet?</div>
+
+      <div class="contact-note">
+        Reach out to a UCOSA-NA executive officer to get on board.<br />
+        <a href="mailto:ucosa.northamerica@gmail.com">ucosa.northamerica@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 UCOSA-North America. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
