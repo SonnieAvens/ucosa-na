@@ -76,12 +76,14 @@ jobs:
             docker pull ${{ env.IMAGE_NAME }}:latest
             docker stop ${{ env.CONTAINER_NAME }} || true
             docker rm ${{ env.CONTAINER_NAME }} || true
+            mkdir -p /opt/ucosa-na/data
             docker run -d \
               --name ${{ env.CONTAINER_NAME }} \
               --restart unless-stopped \
               --network app-network \
               -p 3000:3000 \
               --env-file /opt/ucosa-na/.env \
+              -v /opt/ucosa-na/data:/app/data \
               ${{ env.IMAGE_NAME }}:latest
             docker image prune -f
             echo "Deployed ${{ github.sha }} at $(date)"
