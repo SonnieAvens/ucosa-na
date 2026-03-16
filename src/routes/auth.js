@@ -39,7 +39,13 @@ router.post('/change-password', requireAuth, (req, res) => {
     return res.status(400).json({ error: 'Both current and new password required' });
   }
   if (newPassword.length < 8) {
-    return res.status(400).json({ error: 'New password must be at least 8 characters' });
+    return res.status(400).json({ error: 'Password must be at least 8 characters' });
+  }
+  if (!/[A-Z]/.test(newPassword)) {
+    return res.status(400).json({ error: 'Password must contain at least one uppercase letter' });
+  }
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPassword)) {
+    return res.status(400).json({ error: 'Password must contain at least one special character' });
   }
 
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id);
