@@ -204,7 +204,7 @@
       <h2>&#128274; Member Login</h2>
       <p class="subtitle">Sign in to access the members area</p>
 
-      <form action="#" method="POST">
+      <form id="loginForm">
         <div class="form-group">
           <label for="email">Email Address</label>
           <input type="email" id="email" name="email" placeholder="you@example.com" required />
@@ -213,10 +213,11 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" placeholder="Enter your password" required />
-          <a href="#" class="forgot">Forgot password?</a>
         </div>
 
-        <button type="submit" class="btn-login">Sign In</button>
+        <div id="errorMsg" style="display:none;background:#fff0f0;border:1px solid #e63946;color:#c1121f;border-radius:8px;padding:10px 14px;font-size:0.875rem;margin-bottom:12px;"></div>
+
+        <button type="submit" class="btn-login" id="submitBtn">Sign In</button>
       </form>
 
       <div class="divider">Not a member yet?</div>
@@ -233,5 +234,62 @@
     <p>&copy; 2026 UCOSA-North America. All rights reserved.</p>
   </footer>
 
+  <script>
+    // If already logged in and token is valid, redirect away
+    (function () {
+      const token = localStorage.getItem('ucosa_token');
+      if (token) {
+        fetch('/api/auth/me', { headers: { Authorization: 'Bearer ' + token } })
+          .then(r => { if (r.ok) return r.json(); throw new Error(); })
+          .then(user => {
+            window.location.href = user.mustChangePassword ? '/change-password.html' : '/members.html';
+          })
+          .catch(() => { /* token invalid, stay on page */ });
+      }
+    })();
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+      const submitBtn = document.getElementById('submitBtn');
+
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in…';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Login failed. Please try again.';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        localStorage.setItem('ucosa_token', data.token);
+        localStorage.setItem('ucosa_user', JSON.stringify(data.user));
+
+        if (data.mustChangePassword) {
+          window.location.href = '/change-password.html';
+        } else {
+          window.location.href = '/members.html';
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Network error. Please check your connection and try again.';
+        errorMsg.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    });
+  </script>
 </body>
 </html>

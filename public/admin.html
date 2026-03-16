@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — UCOSA-NA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    header .header-text h1 { font-size: 1.25rem; }
+    header .header-text p  { font-size: 0.8rem; color: #aab4c8; }
+    header .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-logout {
+      background: #e63946;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-logout:hover { background: #c1121f; }
+
+    /* TOP NAV */
+    .topnav {
+      background: #16213e;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .topnav a {
+      color: #cdd6f4;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .topnav a:hover { background: #1a1a2e; color: white; }
+    .topnav a.active { background: #1a1a2e; color: white; font-weight: 600; }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 20px 60px;
+      gap: 28px;
+      align-items: flex-start;
+      flex: 1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 20px 0;
+      position: sticky;
+      top: 16px;
+    }
+    .sidebar h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      padding: 0 20px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 8px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 9px 20px;
+      color: #444;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #f0f4ff;
+      color: #1a1a2e;
+      border-left-color: #1a1a2e;
+      font-weight: 600;
+    }
+
+    /* CONTENT */
+    .content { flex: 1; min-width: 0; }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 32px 36px;
+      margin-bottom: 24px;
+    }
+    section h2 {
+      font-size: 1.35rem;
+      color: #1a1a2e;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8ecf4;
+    }
+
+    /* FORM */
+    .form-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      flex: 1;
+      min-width: 180px;
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #dde3f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #333;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus { border-color: #1a1a2e; }
+
+    .btn-primary {
+      background: #1a1a2e;
+      color: white;
+      border: none;
+      padding: 11px 28px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #16213e; }
+    .btn-primary:disabled { background: #999; cursor: not-allowed; }
+
+    .msg {
+      display: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.875rem;
+      margin-bottom: 16px;
+    }
+    .msg.error   { background: #fff0f0; border: 1px solid #e63946; color: #c1121f; }
+    .msg.success { background: #f0fff4; border: 1px solid #22c55e; color: #166534; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      background: #f4f6f9;
+      color: #555;
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #e8ecf4;
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #333;
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbff; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge.admin  { background: #fef2f2; color: #e63946; }
+    .badge.member { background: #f0f4ff; color: #1a1a2e; }
+    .badge.yes    { background: #fff8e1; color: #7c5700; }
+    .badge.no     { background: #f0fff4; color: #166534; }
+
+    .btn-delete {
+      background: none;
+      border: 1px solid #e63946;
+      color: #e63946;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-delete:hover { background: #e63946; color: white; }
+
+    .empty-row td {
+      text-align: center;
+      color: #aaa;
+      padding: 32px;
+      font-style: italic;
+    }
+
+    /* STATS ROW */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 20px 28px;
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+    }
+    .stat-card .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+    .stat-card .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #aab4c8;
+      text-align: center;
+      padding: 18px 20px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 700px) {
+      .layout { flex-direction: column; }
+      .sidebar { width: 100%; position: static; }
+      section { padding: 22px 18px; }
+      .form-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="/logo.jpg" alt="UCOSA-NA Logo" />
+    <div class="header-text">
+      <h1>UCOSA-North America</h1>
+      <p>Admin Panel</p>
+    </div>
+    <div class="header-right">
+      <span id="headerName" style="color:#cdd6f4;font-size:0.85rem;"></span>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <a href="/">Home</a>
+    <a href="/members.html">Members Area</a>
+    <a href="/admin.html" class="active">Admin Panel</a>
+  </nav>
+
+  <!-- LAYOUT -->
+  <div class="layout" id="mainLayout" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h3>Admin Menu</h3>
+      <a href="/admin.html" class="active">Dashboard</a>
+      <a href="#createMember">Create Member</a>
+      <a href="#membersList">Member List</a>
+      <a href="/members.html">My Profile</a>
+      <a href="/change-password.html">Change Password</a>
+      <a href="/">Back to Home</a>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- STATS -->
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card">
+          <div class="stat-num" id="statTotal">—</div>
+          <div class="stat-label">Total Members</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statAdmins">—</div>
+          <div class="stat-label">Admins</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statPending">—</div>
+          <div class="stat-label">Pending Password Change</div>
+        </div>
+      </div>
+
+      <!-- CREATE MEMBER -->
+      <section id="createMember">
+        <h2>Create New Member</h2>
+        <p style="color:#555;font-size:0.9rem;margin-bottom:20px;">
+          Enter the new member's details. A temporary password will be generated and emailed to them automatically.
+        </p>
+
+        <div id="createError" class="msg error"></div>
+        <div id="createSuccess" class="msg success"></div>
+
+        <form id="createForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" placeholder="e.g. John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="member@example.com" required />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="createBtn">Create Member &amp; Send Email</button>
+        </form>
+      </section>
+
+      <!-- MEMBERS LIST -->
+      <section id="membersList">
+        <h2>All Members</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Must Change PW</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="membersTableBody">
+              <tr class="empty-row"><td colspan="7">Loading members…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 UCOSA-North America. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function logout() {
+      localStorage.removeItem('ucosa_token');
+      localStorage.removeItem('ucosa_user');
+      window.location.href = '/';
+    }
+
+    function getToken() {
+      return localStorage.getItem('ucosa_token');
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      try {
+        return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      } catch { return dateStr; }
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    async function verifyAdmin() {
+      const token = getToken();
+      if (!token) {
+        window.location.href = '/login.html';
+        return null;
+      }
+
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (!res.ok) {
+          window.location.href = '/login.html';
+          return null;
+        }
+
+        const user = await res.json();
+
+        if (user.role !== 'admin') {
+          window.location.href = '/members.html';
+          return null;
+        }
+
+        return user;
+      } catch {
+        window.location.href = '/login.html';
+        return null;
+      }
+    }
+
+    async function loadMembers() {
+      const token = getToken();
+      const tbody = document.getElementById('membersTableBody');
+
+      try {
+        const res = await fetch('/api/admin/users', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (!res.ok) throw new Error('Failed to load members');
+
+        const members = await res.json();
+
+        // Update stats
+        document.getElementById('statTotal').textContent = members.length;
+        document.getElementById('statAdmins').textContent = members.filter(m => m.role === 'admin').length;
+        document.getElementById('statPending').textContent = members.filter(m => m.must_change_password).length;
+
+        if (members.length === 0) {
+          tbody.innerHTML = '<tr class="empty-row"><td colspan="7">No members yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = members.map((m, i) => `
+          <tr>
+            <td style="color:#999;">${i + 1}</td>
+            <td><strong>${escapeHtml(m.full_name)}</strong></td>
+            <td>${escapeHtml(m.email)}</td>
+            <td><span class="badge ${m.role}">${m.role}</span></td>
+            <td>${formatDate(m.created_at)}</td>
+            <td><span class="badge ${m.must_change_password ? 'yes' : 'no'}">${m.must_change_password ? 'Yes' : 'No'}</span></td>
+            <td>
+              <button class="btn-delete" onclick="deleteMember(${m.id}, '${escapeHtml(m.full_name).replace(/'/g, "\\'")}')">
+                Remove
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="7">Error loading members: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function deleteMember(id, name) {
+      if (!confirm(`Are you sure you want to remove ${name}? This cannot be undone.`)) return;
+
+      const token = getToken();
+      try {
+        const res = await fetch('/api/admin/users/' + id, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (res.ok) {
+          loadMembers();
+        } else {
+          const data = await res.json();
+          alert('Error: ' + (data.error || 'Failed to remove member'));
+        }
+      } catch {
+        alert('Network error. Please try again.');
+      }
+    }
+
+    document.getElementById('createForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const errorMsg = document.getElementById('createError');
+      const successMsg = document.getElementById('createSuccess');
+      const createBtn = document.getElementById('createBtn');
+
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
+
+      createBtn.disabled = true;
+      createBtn.textContent = 'Creating…';
+
+      try {
+        const res = await fetch('/api/admin/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+          },
+          body: JSON.stringify({ fullName, email }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Failed to create member.';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        successMsg.textContent = data.message || 'Member created successfully!';
+        successMsg.style.display = 'block';
+        document.getElementById('createForm').reset();
+        loadMembers();
+
+      } catch (err) {
+        errorMsg.textContent = 'Network error. Please try again.';
+        errorMsg.style.display = 'block';
+      } finally {
+        createBtn.disabled = false;
+        createBtn.textContent = 'Create Member & Send Email';
+      }
+    });
+
+    // Init
+    (async function () {
+      const user = await verifyAdmin();
+      if (!user) return;
+
+      document.getElementById('headerName').textContent = user.fullName;
+      document.getElementById('mainLayout').style.display = 'flex';
+
+      loadMembers();
+    })();
+  </script>
+
+</body>
+</html>

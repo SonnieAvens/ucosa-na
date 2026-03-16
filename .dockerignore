@@ -8,3 +8,4 @@ coverage
 nginx
 scripts
 docker-compose*.yml
+data/
